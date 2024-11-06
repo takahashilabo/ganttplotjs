@@ -10,6 +10,9 @@ However, this [gantt.py](https://github.com/emilienkofman/ganttplot/blob/master/
 Therefore, I ported and simplified gantt.py to JS today in my free time, focusing on the functions that I need. The code is complete for me only, but I can change the design of gnuplots, and so on.  You can use it if you like it.
 
 ## Usage
+
+[Start from here](https://takahashilabo.github.io/ganttplotjs/)
+
 Watch the following video.
 
 Of course, you need to instal a gnuplot on your PC and execute the following commands:
