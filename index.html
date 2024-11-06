@@ -20,6 +20,17 @@
                 const e = document.getElementById("result");
                 navigator.clipboard.writeText(e.textContent)
             }
+            function download() {
+                const filename = "default.gnuplot"
+                const e = document.getElementById("result");
+                let element = document.createElement('a');
+                element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(e.textContent));
+                element.setAttribute('download', filename);
+                element.style.display = 'none';
+                document.body.appendChild(element);
+                element.click();
+                document.body.removeChild(element);
+            }
         </script>
         <title>ganttplotjs</title>
 
@@ -30,7 +41,7 @@
             <div class="form-group">
                 <label for="gantt_style">Common Settings：</label>
                 <textarea class="form-control" id="common_settings" rows="10">
-set terminal fig font "Arial,18"                    
+set terminal qt font "Arial,18"                    
 set size ratio 0.5 # the height as 0.5 times the width'
 set xlabel "Time (s)"
 set xlabel font "Arial,20"
@@ -45,41 +56,14 @@ unset colorbox
             </div>
             <div class="form-group">
                 <label for="gantt_data">Gantt Data：</label>
-                <textarea class="form-control" id="gantt_data" rows="10">
-Cut,0,85,1
-Cut,135,199,2
-Cut,677,734,3
-Scan 1,81,95,1
-Scan 1,202,240,1
-Scan 1,381,392,1
-Scan 1,472,486,2
-Scan 1,623,648,2
-Scan 1,772,790,2
-Scan 1,878,927,3
-Scan 1,1017,1031,3
-Scan 1,1136,1155,3
-Scan 1,1244,1271,3
-Scan 2,94,202,1
-Scan 2,233,380,1
-Scan 2,390,472,1
-Scan 2,488,623,2
-Scan 2,644,772,2
-Scan 2,779,878,2
-Scan 2,923,1017,3
-Scan 2,1033,1133,3
-Scan 2,1148,1243,3
-Scan 2,1263,1361,3
-Bind,536,674,1
-Bind,928,1059,2 
-Bind,1378,1483,3
-
-            </textarea>
+                <textarea class="form-control" id="gantt_data" rows="10"></textarea>
         </div>
         <div class="form-group">
             <button type="button" id="gantt_data" class="btn btn-primary" onclick="run()";>Generate</button>
         </div>
         <div class="form-group">
             <button type="button" id="copy_paste" class="btn btn-secondary" onclick="copy_paste()";>Copy and Paste</button>
+            <button type="button" id="copy_paste" class="btn btn-secondary" onclick="download()";>Download</button>
             <pre><div id="result"></div></pre>
         </div>
         <footer class="footer">

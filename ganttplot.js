@@ -143,3 +143,4 @@ function compute(ganttdata) {
 
     return write_data(plot_dims, plot_rects, plot_lines, plot_labels);
 }
+
