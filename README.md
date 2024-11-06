@@ -1,6 +1,6 @@
 # ganttplot.js
 
-## Background.
+## Background
 I needed to use a Gantt chart in a paper for my research in 2014, and [I used the following program](https://web.archive.org/web/20170910201044/http://wiki.mn.wtb.tue.nl/wonham/gantt.py): It was very helpful in drawing a simple but beautiful Gantt chart.  
 
 Unfortunately, the site seems to have been closed; therefore, I searched GitHub and found [@emilienkofman](https://github.com/emilienkofman) who had [cloned it](https://github.com/emilienkofman/ganttplot). Thank you very much!
@@ -13,7 +13,7 @@ Therefore, I ported and simplified gantt.py to JS today in my free time, focusin
 
 [Start from here](https://takahashilabo.github.io/ganttplotjs/)
 
-Watch the following video.
+Watch [this video](https://youtu.be/zt4NGLv1bMQ).
 
 Of course, you need to instal a gnuplot on your PC and execute the following commands:
 
