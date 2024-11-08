@@ -24,11 +24,12 @@ class Rectangle {
 
 class ColorBook {
     constructor(tasks) {
+        this.pallete = ["0xffcccc", "0xccffcc", "0xffffcc", "0xccccff", "0xccffff", "0xffccff"];
         this.colors = {};
         for (let i = 0; i < tasks.length; i++) {
-            this.colors[tasks[i]] = parseFloat(i) * 1.0 / (tasks.length - 1);
+            //this.colors[tasks[i]] = parseFloat(i) * 1.0 / (tasks.length - 1);
+            this.colors[tasks[i]] = this.pallete[i % this.pallete.length];
         }
-        this.prefix = 'palette frac';
     }
 }
 
@@ -102,7 +103,7 @@ function generate_plotdata(activities, resources, tasks, rectangles,
     //    'unset colorbox'
         `set xrange [${xmin}:${xmax}]`,
         `set yrange [${ymin}:${ymax}]`,
-        `set ytics ${ytics}`
+        `set ytics ${ytics}`,
     ];
 
     // Generate gnuplot rectangle objects
@@ -110,7 +111,7 @@ function generate_plotdata(activities, resources, tasks, rectangles,
         [`set object ${index + 1} rectangle`,
             `from ${r.bottomleft[0]}, ${r.bottomleft[1]}`,
             `to ${r.topright[0]}, ${r.topright[1]}`,
-            `fillcolor ${color_book.prefix} ${r.fillcolor}`,
+            `fillcolor rgbcolor ${r.fillcolor}`,
             'fillstyle solid 0.8'].join(" "));
 
     // Generate gnuplot labels
