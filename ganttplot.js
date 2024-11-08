@@ -24,11 +24,13 @@ class Rectangle {
 
 class ColorBook {
     constructor(tasks) {
+        let sorted_tasks = [...tasks];
+        sorted_tasks.sort();
         this.pallete = ["0xffcccc", "0xccffcc", "0xffffcc", "0xccccff", "0xccffff", "0xffccff"];
         this.colors = {};
         for (let i = 0; i < tasks.length; i++) {
             //this.colors[tasks[i]] = parseFloat(i) * 1.0 / (tasks.length - 1);
-            this.colors[tasks[i]] = this.pallete[i % this.pallete.length];
+            this.colors[sorted_tasks[i]] = this.pallete[i % this.pallete.length];
         }
     }
 }
