@@ -41,18 +41,45 @@
             <div class="form-group">
                 <label for="gantt_style">Common Settings：</label>
                 <textarea class="form-control" id="common_settings" rows="10">
-set terminal qt font "Arial,18"                    
-set size ratio 0.5 # the height as 0.5 times the width'
+set terminal qt font "Arial,16"                    
+set size ratio 0.4 # the height as 0.5 times the width'
 set xlabel "Time (s)"
-set xlabel font "Arial,20"
-set tics font "Arial,18" # scale letter font'
+set xlabel font "Arial,18"
+set tics font "Arial,16" # scale letter font'
 set grid xtics # grid lines for X-axis displayed
-set key off # no legend displayed
+set key font "Arial,14" # legend font'
                 </textarea>
             </div>
             <div class="form-group">
                 <label for="gantt_data">Gantt Data：</label>
-                <textarea class="form-control" id="gantt_data" rows="10"></textarea>
+                <textarea class="form-control" id="gantt_data" rows="10">
+Cut, 1, 83, 1
+Cut, 137, 202, 2
+Cut, 681, 738, 3
+Scan 1, 83, 95, 1
+Scan 1, 205, 235, 1
+Scan 1, 385, 392, 1
+Scan 1, 475, 489, 2
+Scan 1, 625, 646, 2
+Scan 1, 773, 780, 2
+Scan 1, 880, 925, 3
+Scan 1, 1019, 1033, 3
+Scan 1, 1138, 1150, 3
+Scan 1, 1246, 1265, 3
+Scan 2, 94, 203, 1
+Scan 2, 237, 383, 1
+Scan 2, 392, 474, 1
+Scan 2, 489, 627, 2
+Scan 2, 648, 773, 2
+Scan 2, 780, 880, 2
+Scan 2, 925, 1021, 3
+Scan 2, 1033, 1138, 3
+Scan 2, 1150, 1247, 3
+Scan 2, 1265, 1366, 3
+Bind, 538, 676, 1
+Bind, 930, 1063, 2
+Bind, 1380, 1484, 3                    
+                </textarea>
         </div>
         <div class="form-group">
             <button type="button" id="gantt_data" class="btn btn-primary" onclick="run()";>Generate</button>

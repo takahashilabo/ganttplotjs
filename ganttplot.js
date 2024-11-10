@@ -1,6 +1,6 @@
 //The code obtained from https://github.com/emilienkofman/ganttplot, and simplify the code and translated to JS.
 
-let rectangleHeight = 0.6  // Height of a rectangle in units.
+let rectangleHeight = 0.8  // Height of a rectangle in units.
 
 class Activity {
     constructor(resource, start, stop, task) {
@@ -26,10 +26,9 @@ class ColorBook {
     constructor(tasks) {
         let sorted_tasks = [...tasks];
         sorted_tasks.sort();
-        this.pallete = ["0xffcccc", "0xccffcc", "0xffffcc", "0xccccff", "0xccffff", "0xffccff"];
+        this.pallete = ["pattern 0", "pattern 1", "pattern 2", "pattern 3", "pattern 4", "pattern 5"];
         this.colors = {};
         for (let i = 0; i < tasks.length; i++) {
-            //this.colors[tasks[i]] = parseFloat(i) * 1.0 / (tasks.length - 1);
             this.colors[sorted_tasks[i]] = this.pallete[i % this.pallete.length];
         }
     }
@@ -54,10 +53,10 @@ function load_ganttdata(ganttdata) {
         if (l.length < 4) {
             continue;
         }
-        const resource = l[0];
+        const resource = l[0].trim();
         const start = parseFloat(l[1]);
         const stop = parseFloat(l[2]);
-        const task = l[3];
+        const task = l[3].trim();
         activities.push(new Activity(resource, start, stop, task));
     }
 
@@ -93,16 +92,6 @@ function generate_plotdata(activities, resources, tasks, rectangles,
 
     // Set plot dimensions
     const plot_dimensions = [
-    //    'set size ratio 0.5 # the height as 0.5 times the width',
-    //    `set xlabel "${xlabel}"`,
-    //    'set xlabel font "Arial,20"',
-    //    'set tics font "Arial,18" # scale letter font',
-    //    'set lmargin 15',
-    //    'set rmargin 5',
-    //    'set grid xtics # grid lines for X-axis displayed',
-    //    'set key off # no legend displayed',
-    //    'set palette model RGB defined ( 0 1.0 0.8 0.8, 1 1.0 0.8 1.0, 2 0.8 0.8 1.0, 3 0.8 1.0 1.0, 4 0.8 1.0 0.8, 5 1.0 1.0 0.8 )',
-    //    'unset colorbox'
         `set xrange [${xmin}:${xmax}]`,
         `set yrange [${ymin}:${ymax}]`,
         `set ytics ${ytics}`,
@@ -113,23 +102,24 @@ function generate_plotdata(activities, resources, tasks, rectangles,
         [`set object ${index + 1} rectangle`,
             `from ${r.bottomleft[0]}, ${r.bottomleft[1]}`,
             `to ${r.topright[0]}, ${r.topright[1]}`,
-            `fillcolor rgbcolor ${r.fillcolor}`,
-            'fillstyle solid 0.8'].join(" "));
-
-    // Generate gnuplot labels
-    const plot_labels = rectangles.map((r, index) =>
-        [`set label ${index + 1} center at`,
-        `${r.bottomleft[0]+(-r.bottomleft[0]+r.topright[0])/2.0},${r.bottomleft[1]+(-r.bottomleft[1]+r.topright[1])/2.0}`,
-        `"${r.task}"`].join(" "));
+            'fc "black"',
+            `fs ${r.fillcolor}`].join(" "));
 
     // Generate gnuplot lines
-    const plot_lines = ['plot -1'];
+    let sorted_tasks = [...tasks];
+    sorted_tasks.sort();
+    const plot_lines = 'plot ' + sorted_tasks.map((t) =>
+        ['-1',
+            `title "${t}"`,
+            'with boxes',
+            `fs ${color_book.colors[t]}`,
+            'lt -1'].join(" "));
 
-    return [plot_dimensions, plot_rectangles, plot_lines, plot_labels];
+    return [plot_dimensions, plot_rectangles, plot_lines];
 }
 
-function write_data(plot_dimensions, plot_rectangles, plot_lines, plot_labels) {
-    return [].concat(plot_dimensions, plot_rectangles, plot_labels, plot_lines).join("\n");
+function write_data(plot_dimensions, plot_rectangles, plot_lines) {
+    return [].concat(plot_dimensions, plot_rectangles, plot_lines).join("\n");
 }        
 
 function compute(ganttdata) {
@@ -141,9 +131,9 @@ function compute(ganttdata) {
     const color_book = new ColorBook(tasks);
     const rectangles = make_rectangles(activities, resource_map, color_book.colors);
 
-    [plot_dims, plot_rects, plot_lines, plot_labels] = 
+    [plot_dims, plot_rects, plot_lines] = 
             generate_plotdata(activities, resources, tasks, rectangles, resource_map, color_book)
 
-    return write_data(plot_dims, plot_rects, plot_lines, plot_labels);
+    return write_data(plot_dims, plot_rects, plot_lines);
 }
 
